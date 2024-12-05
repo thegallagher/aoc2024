@@ -1,0 +1,7 @@
+.venv
+.idea
+
+example.txt
+input.txt
+example-*.txt
+input-*.txt
