@@ -1,4 +1,5 @@
 from pathlib import Path
+from time import process_time_ns
 from typing import Iterator, Optional
 
 
@@ -43,7 +44,8 @@ def parse_line_2d(line) -> Optional[list[int]]:
     return result
 
 
-def solve(input_file) -> int:
+def solve(input_file) -> tuple[int, int]:
+    start_time = process_time_ns()
     answer = 0
 
     for left, right in parse_file_1d(input_file):
@@ -59,12 +61,13 @@ def solve(input_file) -> int:
     #         line *= puzzle[y][x]
     #     answer += line
 
-    return answer
+    return answer, process_time_ns() - start_time
 
 
 expected_answer = 14
-test_answer = solve('example.txt')
+test_answer, test_time = solve('example.txt')
 assert test_answer == expected_answer, f'Expected {expected_answer}, got {test_answer}'
+print(f'Test: {test_answer} ({test_time / 1_000_000.0:.2f}ms)')
 
-real_answer = solve('input.txt')
-print(f'Answer: {real_answer}')
+real_answer, real_time = solve('input.txt')
+print(f'Answer: {real_answer} ({real_time / 1_000_000.0:.2f}ms)')
